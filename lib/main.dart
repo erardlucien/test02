@@ -327,8 +327,7 @@ class _StatefulPictureState extends State<StatefulPicture> {
       if (widget._element._star.values.first < 100) {
         int count = widget._element._star.values.first + 1;
         Icon star = widget._element._star.keys.first;
-        widget._element._star.remove(star);
-        widget._element._star.update(star, (value) => count);
+        widget._element._star.update(star, (value) => count,);
       }
     });
   }
