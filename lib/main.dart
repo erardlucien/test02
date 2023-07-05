@@ -37,8 +37,8 @@ class Picture {
   final Text _description;
   final Map<Icon, Text> _options;
   final List<bool> _isClicked;
-  Picture(this._image, this._titles, this._star, this._description, this._options,
-      this._isClicked);
+  Picture(this._image, this._titles, this._star, this._description,
+      this._options, this._isClicked);
 }
 
 class PicturesAdder extends StatefulWidget {
@@ -139,9 +139,30 @@ class _PicturesAdderState extends State<PicturesAdder> {
               style: TextStyle(fontSize: 16),
             ),
             {
-              const Icon(Icons.call, color: Colors.lightBlue, size: 25, ): const Text('CALL', style: TextStyle(color: Colors.lightBlue),),
-              const Icon(Icons.near_me, color: Colors.lightBlue, size: 25, ): const Text('ROUTE', style: TextStyle(color: Colors.lightBlue),),
-              const Icon(Icons.share, color: Colors.lightBlue, size: 25, ): const Text('SHARE', style: TextStyle(color: Colors.lightBlue),),
+              const Icon(
+                Icons.call,
+                color: Colors.lightBlue,
+                size: 25,
+              ): const Text(
+                'CALL',
+                style: TextStyle(color: Colors.lightBlue),
+              ),
+              const Icon(
+                Icons.near_me,
+                color: Colors.lightBlue,
+                size: 25,
+              ): const Text(
+                'ROUTE',
+                style: TextStyle(color: Colors.lightBlue),
+              ),
+              const Icon(
+                Icons.share,
+                color: Colors.lightBlue,
+                size: 25,
+              ): const Text(
+                'SHARE',
+                style: TextStyle(color: Colors.lightBlue),
+              ),
             },
             [false, false])));
 
@@ -217,13 +238,26 @@ class StatefulPicture extends StatefulWidget {
 class _StatefulPictureState extends State<StatefulPicture> {
   Column _column(Icon icon, Text text) {
     return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  icon,
-                  text,
-                ],
-              );
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        icon,
+        text,
+      ],
+    );
+  }
+
+  List<Column> _colums(Map<Icon, Text> map) {
+    List<Column> list = List.empty(growable: true);
+    for (int i = 0; i < map.length; ++i) {
+      list.add(
+        _column(
+          map.keys.elementAt(i),
+          map.values.elementAt(i)
+          )
+        );
+    }
+    return list;
   }
 
   @override
@@ -310,11 +344,7 @@ class _StatefulPictureState extends State<StatefulPicture> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _column(element._options.keys.elementAt(0), element._options.values.elementAt(0)),
-              _column(element._options.keys.elementAt(1), element._options.values.elementAt(1)),
-              _column(element._options.keys.elementAt(2), element._options.values.elementAt(2)),
-            ],
+            children: _colums(element._options),
           ),
           element._description,
         ],
@@ -327,7 +357,10 @@ class _StatefulPictureState extends State<StatefulPicture> {
       if (widget._element._star.values.first < 100) {
         int count = widget._element._star.values.first + 1;
         Icon star = widget._element._star.keys.first;
-        widget._element._star.update(star, (value) => count,);
+        widget._element._star.update(
+          star,
+          (value) => count,
+        );
       }
     });
   }
